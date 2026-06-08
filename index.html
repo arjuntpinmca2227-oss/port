@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Arjun T P — Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Clash+Display:wght@400;500;600;700&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --white:#ffffff;
+  --off:#f8f7ff;
+  --blue:#4361ee;
+  --purple:#7209b7;
+  --pink:#f72585;
+  --cyan:#4cc9f0;
+  --dark:#0d0d1a;
+  --gray:#6b7280;
+  --light:#f1f0ff;
+  --border:#e8e4ff;
+}
+html{scroll-behavior:smooth}
+body{background:var(--white);color:var(--dark);font-family:'Outfit',sans-serif;overflow-x:hidden;cursor:none}
+
+/* CURSOR */
+.cur{width:10px;height:10px;background:var(--blue);border-radius:50%;position:fixed;top:0;left:0;pointer-events:none;z-index:9999;transition:transform 0.1s;mix-blend-mode:multiply}
+.cur-ring{width:32px;height:32px;border:2px solid var(--blue);border-radius:50%;position:fixed;top:0;left:0;pointer-events:none;z-index:9998;transition:transform 0.3s ease,width 0.2s,height 0.2s;opacity:0.4}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:1.2rem 5rem;background:rgba(255,255,255,0.9);backdrop-filter:blur(20px);border-bottom:1px solid var(--border)}
+.nav-logo{font-family:'Clash Display',sans-serif;font-weight:700;font-size:1.3rem;background:linear-gradient(135deg,var(--blue),var(--purple));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.nav-links{display:flex;gap:2.5rem;list-style:none}
+.nav-links a{color:var(--gray);text-decoration:none;font-size:0.85rem;font-weight:500;transition:color 0.2s;position:relative}
+.nav-links a::after{content:'';position:absolute;bottom:-2px;left:0;width:0;height:2px;background:linear-gradient(90deg,var(--blue),var(--purple));transition:width 0.3s}
+.nav-links a:hover{color:var(--blue)}
+.nav-links a:hover::after{width:100%}
+
+/* HERO */
+#hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:120px 5rem 5rem;position:relative;overflow:hidden}
+.hero-blob{position:absolute;border-radius:50%;filter:blur(80px);pointer-events:none;z-index:0}
+.blob1{width:500px;height:500px;background:rgba(67,97,238,0.12);top:-100px;right:-100px}
+.blob2{width:400px;height:400px;background:rgba(114,9,183,0.1);bottom:50px;left:-80px}
+.blob3{width:300px;height:300px;background:rgba(247,37,133,0.08);top:50%;right:20%}
+.hero-inner{position:relative;z-index:1}
+.hero-badge{display:inline-flex;align-items:center;gap:0.5rem;background:var(--light);border:1px solid var(--border);border-radius:100px;padding:0.4rem 1rem;font-size:0.75rem;font-weight:500;color:var(--blue);margin-bottom:2rem;opacity:0;animation:fadeUp 0.6s 0.2s forwards}
+.hero-badge span{width:6px;height:6px;background:var(--pink);border-radius:50%;animation:pulse 2s infinite}
+.hero-name{font-family:'Clash Display',sans-serif;font-size:clamp(3.5rem,9vw,8rem);font-weight:700;line-height:1;letter-spacing:-0.03em;opacity:0;animation:fadeUp 0.7s 0.4s forwards}
+.hero-name .line2{background:linear-gradient(135deg,var(--blue) 0%,var(--purple) 50%,var(--pink) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-sub{margin-top:1.8rem;font-size:1.05rem;color:var(--gray);max-width:520px;line-height:1.8;font-weight:400;opacity:0;animation:fadeUp 0.7s 0.6s forwards}
+.hero-cta{margin-top:2.5rem;display:flex;gap:1rem;align-items:center;opacity:0;animation:fadeUp 0.7s 0.8s forwards}
+.btn-grad{background:linear-gradient(135deg,var(--blue),var(--purple));color:#fff;padding:0.85rem 2.2rem;border-radius:100px;font-size:0.9rem;font-weight:600;text-decoration:none;transition:transform 0.2s,box-shadow 0.2s;box-shadow:0 4px 24px rgba(67,97,238,0.3)}
+.btn-grad:hover{transform:translateY(-3px);box-shadow:0 8px 32px rgba(67,97,238,0.45)}
+.btn-outline{color:var(--dark);font-size:0.9rem;font-weight:500;text-decoration:none;padding:0.85rem 2rem;border-radius:100px;border:1.5px solid var(--border);transition:border-color 0.2s,color 0.2s}
+.btn-outline:hover{border-color:var(--blue);color:var(--blue)}
+.hero-stats{display:flex;gap:3rem;margin-top:4rem;opacity:0;animation:fadeUp 0.7s 1s forwards}
+.stat-item{display:flex;flex-direction:column}
+.stat-num{font-family:'Clash Display',sans-serif;font-size:2rem;font-weight:700;background:linear-gradient(135deg,var(--blue),var(--purple));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.stat-label{font-size:0.75rem;color:var(--gray);text-transform:uppercase;letter-spacing:0.08em;margin-top:0.2rem}
+.scroll-hint{position:absolute;bottom:2.5rem;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:0.5rem;color:var(--gray);font-size:0.7rem;letter-spacing:0.1em;text-transform:uppercase;z-index:1;opacity:0;animation:fadeUp 0.7s 1.2s forwards}
+.scroll-line{width:1px;height:40px;background:linear-gradient(to bottom,var(--blue),transparent);animation:scrollAnim 2s infinite}
+
+/* SECTION BASE */
+section{padding:7rem 5rem;max-width:1300px;margin:0 auto}
+.sec-label{font-size:0.72rem;text-transform:uppercase;letter-spacing:0.2em;color:var(--blue);font-weight:600;margin-bottom:0.8rem}
+.sec-title{font-family:'Clash Display',sans-serif;font-size:clamp(2rem,4vw,3rem);font-weight:700;letter-spacing:-0.02em;line-height:1.1}
+.sec-title span{background:linear-gradient(135deg,var(--blue),var(--purple));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+
+/* ABOUT */
+.about-wrap{display:grid;grid-template-columns:1fr 1fr;gap:5rem;margin-top:4rem;align-items:start}
+.about-avatar{width:280px;height:280px;border-radius:40% 60% 60% 40%/40% 40% 60% 60%;background:linear-gradient(135deg,var(--blue),var(--purple),var(--pink));display:flex;align-items:center;justify-content:center;font-family:'Clash Display',sans-serif;font-size:5rem;font-weight:700;color:white;margin-bottom:2rem;animation:morphBlob 8s ease-in-out infinite}
+.about-text-block p{font-size:0.95rem;color:#555;line-height:1.9;margin-bottom:1rem}
+.about-text-block strong{color:var(--dark);font-weight:600}
+.about-cards{display:flex;flex-direction:column;gap:1rem}
+.info-card{background:var(--white);border:1.5px solid var(--border);border-radius:16px;padding:1.2rem 1.5rem;display:flex;align-items:center;gap:1rem;transition:transform 0.2s,box-shadow 0.2s,border-color 0.2s}
+.info-card:hover{transform:translateX(6px);box-shadow:0 4px 24px rgba(67,97,238,0.1);border-color:var(--blue)}
+.info-icon{width:40px;height:40px;border-radius:12px;background:var(--light);display:flex;align-items:center;justify-content:center;font-size:1.2rem;flex-shrink:0}
+.info-label{font-size:0.7rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--gray);font-weight:500}
+.info-val{font-size:0.9rem;font-weight:600;color:var(--dark);margin-top:0.15rem}
+
+/* SKILLS */
+#skills{background:var(--off)}
+.skills-wrap{margin-top:4rem;display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1.5rem}
+.skill-card{background:var(--white);border:1.5px solid var(--border);border-radius:20px;padding:1.8rem;transition:transform 0.25s,box-shadow 0.25s;position:relative;overflow:hidden}
+.skill-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--blue),var(--purple),var(--pink));transform:scaleX(0);transform-origin:left;transition:transform 0.3s}
+.skill-card:hover{transform:translateY(-6px);box-shadow:0 12px 40px rgba(67,97,238,0.15)}
+.skill-card:hover::before{transform:scaleX(1)}
+.sk-icon{width:48px;height:48px;border-radius:14px;background:var(--light);display:flex;align-items:center;justify-content:center;font-size:1.5rem;margin-bottom:1rem}
+.sk-cat{font-size:0.68rem;text-transform:uppercase;letter-spacing:0.12em;color:var(--blue);font-weight:600;margin-bottom:0.3rem}
+.sk-name{font-family:'Clash Display',sans-serif;font-size:1.1rem;font-weight:600;margin-bottom:1rem}
+.sk-pills{display:flex;flex-wrap:wrap;gap:0.4rem}
+.pill{font-size:0.72rem;padding:0.3rem 0.75rem;border-radius:100px;background:var(--light);color:var(--blue);font-weight:500;border:1px solid var(--border)}
+
+/* PROJECTS */
+.projects-grid{margin-top:4rem;display:grid;grid-template-columns:1fr 1fr;gap:2rem}
+.proj-card{border-radius:24px;padding:2.5rem;position:relative;overflow:hidden;transition:transform 0.25s,box-shadow 0.25s;cursor:pointer}
+.proj-card:hover{transform:translateY(-8px)}
+.proj-card.blue-card{background:linear-gradient(135deg,#eef2ff,#e0e7ff);border:1.5px solid #c7d2fe}
+.proj-card.purple-card{background:linear-gradient(135deg,#fdf4ff,#f3e8ff);border:1.5px solid #e9d5ff}
+.proj-card:hover{box-shadow:0 20px 60px rgba(67,97,238,0.15)}
+.proj-num{font-family:'Clash Display',sans-serif;font-size:4rem;font-weight:700;opacity:0.08;position:absolute;top:1rem;right:1.5rem;line-height:1;color:var(--blue)}
+.proj-tag{display:inline-block;font-size:0.68rem;text-transform:uppercase;letter-spacing:0.12em;font-weight:600;color:var(--blue);background:rgba(67,97,238,0.1);padding:0.3rem 0.8rem;border-radius:100px;margin-bottom:1.2rem}
+.purple-card .proj-tag{color:var(--purple);background:rgba(114,9,183,0.1)}
+.proj-name{font-family:'Clash Display',sans-serif;font-size:1.8rem;font-weight:700;margin-bottom:1rem;letter-spacing:-0.01em}
+.proj-desc{font-size:0.88rem;color:#555;line-height:1.8;margin-bottom:1.5rem}
+.proj-stack{display:flex;flex-wrap:wrap;gap:0.5rem}
+.stack-tag{font-size:0.72rem;padding:0.3rem 0.8rem;border-radius:100px;background:rgba(255,255,255,0.8);color:var(--dark);font-weight:500;border:1px solid rgba(255,255,255,0.5)}
+.proj-arrow{position:absolute;bottom:1.5rem;right:1.5rem;width:40px;height:40px;border-radius:50%;background:var(--blue);display:flex;align-items:center;justify-content:center;color:white;font-size:1rem;transition:transform 0.2s,background 0.2s}
+.purple-card .proj-arrow{background:var(--purple)}
+.proj-card:hover .proj-arrow{transform:translate(3px,-3px)}
+.proj-features{display:flex;flex-wrap:wrap;gap:0.5rem;margin-top:1rem}
+.feat-item{font-size:0.72rem;padding:0.3rem 0.8rem;border-radius:100px;background:rgba(255,255,255,0.6);color:var(--dark);font-weight:500;border:1px solid rgba(255,255,255,0.5)}
+a.proj-card{display:block;text-decoration:none;color:inherit}
+a.proj-card:focus{outline:3px solid var(--blue);outline-offset:4px}
+
+/* EDUCATION */
+#education{background:var(--off)}
+.edu-wrap{margin-top:4rem}
+.edu-timeline{position:relative;padding-left:3rem}
+.edu-timeline::before{content:'';position:absolute;left:0;top:0;bottom:0;width:2px;background:linear-gradient(to bottom,var(--blue),var(--purple),transparent)}
+.edu-item{position:relative;margin-bottom:3rem}
+.edu-dot{position:absolute;left:-3.4rem;top:0.2rem;width:14px;height:14px;border-radius:50%;background:linear-gradient(135deg,var(--blue),var(--purple));box-shadow:0 0 0 4px rgba(67,97,238,0.15)}
+.edu-card{background:var(--white);border:1.5px solid var(--border);border-radius:20px;padding:2rem 2.5rem;transition:transform 0.2s,box-shadow 0.2s,border-color 0.2s}
+.edu-card:hover{transform:translateX(8px);border-color:var(--blue);box-shadow:0 8px 32px rgba(67,97,238,0.12)}
+.edu-year-badge{display:inline-block;background:linear-gradient(135deg,var(--blue),var(--purple));color:white;font-size:0.75rem;font-weight:600;padding:0.3rem 1rem;border-radius:100px;margin-bottom:1rem}
+.edu-degree{font-family:'Clash Display',sans-serif;font-size:1.4rem;font-weight:700;margin-bottom:0.4rem}
+.edu-school{font-size:0.88rem;color:var(--gray);font-weight:400}
+
+/* INTERNSHIPS */
+#internships{background:var(--white)}
+.intern-grid{margin-top:4rem;display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1.5rem}
+.intern-card{background:var(--white);border:1.5px solid var(--border);border-radius:20px;padding:2rem;position:relative;overflow:hidden;transition:transform 0.25s,box-shadow 0.25s,border-color 0.25s}
+.intern-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--blue),var(--purple),var(--pink));transform:scaleX(0);transform-origin:left;transition:transform 0.3s}
+.intern-card:hover{transform:translateY(-6px);box-shadow:0 12px 40px rgba(67,97,238,0.15);border-color:var(--blue)}
+.intern-card:hover::before{transform:scaleX(1)}
+.intern-role-badge{display:inline-flex;align-items:center;gap:0.4rem;font-size:0.68rem;text-transform:uppercase;letter-spacing:0.12em;font-weight:600;color:var(--blue);background:rgba(67,97,238,0.08);padding:0.3rem 0.8rem;border-radius:100px;margin-bottom:1.2rem}
+.intern-role-badge .intern-dot{width:6px;height:6px;background:var(--pink);border-radius:50%;display:inline-block}
+.intern-company{font-family:'Clash Display',sans-serif;font-size:1.25rem;font-weight:700;margin-bottom:0.3rem;letter-spacing:-0.01em}
+.intern-location{font-size:0.8rem;color:var(--gray);display:flex;align-items:center;gap:0.35rem;margin-bottom:1.2rem}
+.intern-skills{display:flex;flex-wrap:wrap;gap:0.4rem}
+
+/* CONTACT */
+.contact-wrap{margin-top:4rem;display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center}
+.contact-left .big-text{font-family:'Clash Display',sans-serif;font-size:clamp(2.5rem,5vw,4rem);font-weight:700;line-height:1.1;letter-spacing:-0.02em}
+.contact-left .big-text span{background:linear-gradient(135deg,var(--blue),var(--pink));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.contact-left p{margin-top:1.5rem;font-size:0.95rem;color:var(--gray);line-height:1.8;max-width:380px}
+.contact-links{display:flex;flex-direction:column;gap:1rem}
+.c-link{display:flex;align-items:center;gap:1rem;padding:1.2rem 1.5rem;background:var(--white);border:1.5px solid var(--border);border-radius:16px;text-decoration:none;color:inherit;transition:transform 0.2s,box-shadow 0.2s,border-color 0.2s}
+.c-link:hover{transform:translateX(8px);box-shadow:0 6px 24px rgba(67,97,238,0.12);border-color:var(--blue)}
+.c-link-icon{width:44px;height:44px;border-radius:12px;background:var(--light);display:flex;align-items:center;justify-content:center;font-size:1.2rem;flex-shrink:0;transition:background 0.2s}
+.c-link:hover .c-link-icon{background:var(--blue);color:white}
+.c-link-body{flex:1}
+.c-link-type{font-size:0.68rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--gray);font-weight:500}
+.c-link-val{font-size:0.9rem;font-weight:600;color:var(--dark);margin-top:0.15rem}
+.c-link-arrow{color:var(--blue);font-size:1.1rem;transition:transform 0.2s}
+.c-link:hover .c-link-arrow{transform:translate(3px,-3px)}
+
+/* FOOTER */
+footer{border-top:1px solid var(--border);padding:2rem 5rem;display:flex;justify-content:space-between;align-items:center;font-size:0.78rem;color:var(--gray)}
+footer .f-logo{font-family:'Clash Display',sans-serif;font-weight:700;background:linear-gradient(135deg,var(--blue),var(--purple));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-size:1rem}
+
+/* REVEAL */
+.reveal{opacity:0;transform:translateY(28px);transition:opacity 0.65s ease,transform 0.65s ease}
+.reveal.up{opacity:1;transform:translateY(0)}
+
+/* ANIMATIONS */
+@keyframes fadeUp{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.4}}
+@keyframes scrollAnim{0%{opacity:1;transform:scaleY(1) translateY(0)}100%{opacity:0;transform:scaleY(0.5) translateY(20px)}}
+@keyframes morphBlob{0%,100%{border-radius:40% 60% 60% 40%/40% 40% 60% 60%}25%{border-radius:60% 40% 40% 60%/60% 60% 40% 40%}50%{border-radius:50% 50% 60% 40%/50% 60% 40% 50%}75%{border-radius:40% 60% 50% 50%/60% 40% 60% 40%}}
+
+/* SCROLLBAR */
+::-webkit-scrollbar{width:5px}
+::-webkit-scrollbar-track{background:var(--white)}
+::-webkit-scrollbar-thumb{background:linear-gradient(var(--blue),var(--purple));border-radius:10px}
+
+@media(max-width:900px){
+  nav{padding:1rem 1.5rem}
+  .nav-links{display:none}
+  #hero{padding:100px 1.5rem 3rem}
+  section{padding:4rem 1.5rem}
+  .about-wrap,.projects-grid,.contact-wrap{grid-template-columns:1fr;gap:2.5rem}
+  footer{padding:1.5rem;flex-direction:column;gap:0.5rem;text-align:center}
+  .about-avatar{width:180px;height:180px;font-size:3rem}
+}
+</style>
+</head>
+<body>
+
+<div class="cur" id="cur"></div>
+<div class="cur-ring" id="curRing"></div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">ATP/</div>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#education">Education</a></li>
+    <li><a href="#internships">Internships</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<div id="hero">
+  <div class="hero-blob blob1"></div>
+  <div class="hero-blob blob2"></div>
+  <div class="hero-blob blob3"></div>
+  <div class="hero-inner">
+    <div class="hero-badge"><span></span> Available for Internships &amp; Projects</div>
+    <h1 class="hero-name">
+      Arjun<br/>
+      <span class="line2">T P.</span>
+    </h1>
+    <p class="hero-sub">MCA student &amp; software developer. I build elegant, practical solutions — from event platforms to collaboration tools — using Java, Python, C &amp; MySQL.</p>
+    <div class="hero-cta">
+      <a href="#projects" class="btn-grad">See My Work</a>
+      <a href="#contact" class="btn-outline">Let's Talk →</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat-item"><span class="stat-num">2</span><span class="stat-label">Projects Built</span></div>
+      <div class="stat-item"><span class="stat-num">3</span><span class="stat-label">Internships</span></div>
+      <div class="stat-item"><span class="stat-num">3+</span><span class="stat-label">Languages</span></div>
+      <div class="stat-item"><span class="stat-num">2027</span><span class="stat-label">Graduating</span></div>
+    </div>
+  </div>
+  <div class="scroll-hint">
+    <div class="scroll-line"></div>
+    <span>Scroll</span>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="reveal"><div class="sec-label">Who I Am</div></div>
+  <div class="reveal"><h2 class="sec-title">About <span>Me</span></h2></div>
+  <div class="about-wrap">
+    <div class="reveal">
+      <div class="about-avatar">AT</div>
+      <div class="about-text-block">
+        <p>I'm a <strong>Master of Computer Applications</strong> student at Saintgits College of Engineering, Kerala — expected to graduate in 2027. Passionate about building software that makes a real difference.</p>
+        <p>From <strong>event management systems</strong> to <strong>coding collaboration platforms</strong>, I enjoy turning ideas into working products that are both functional and user-centric.</p>
+        <p>Fluent in <strong>English, Hindi &amp; Malayalam</strong> — communication is as natural to me as code.</p>
+      </div>
+    </div>
+    <div class="about-cards reveal">
+      <div class="info-card"><div class="info-icon">📍</div><div><div class="info-label">Location</div><div class="info-val">Kerala, India</div></div></div>
+      <div class="info-card"><div class="info-icon">🎓</div><div><div class="info-label">Institution</div><div class="info-val">Saintgits College of Engineering</div></div></div>
+      <div class="info-card"><div class="info-icon">📅</div><div><div class="info-label">Date of Birth</div><div class="info-val">24 August 2004</div></div></div>
+      <div class="info-card"><div class="info-icon">🌐</div><div><div class="info-label">Nationality</div><div class="info-val">Indian</div></div></div>
+      <div class="info-card"><div class="info-icon">✉️</div><div><div class="info-label">Email</div><div class="info-val">arjunt397@gmail.com</div></div></div>
+      <div class="info-card"><div class="info-icon">📱</div><div><div class="info-label">Phone</div><div class="info-val">+91 9037548996</div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="reveal"><div class="sec-label">What I Know</div></div>
+  <div class="reveal"><h2 class="sec-title">My <span>Skills</span></h2></div>
+  <div class="skills-wrap">
+    <div class="skill-card reveal">
+      <div class="sk-icon">💻</div>
+      <div class="sk-cat">Languages</div>
+      <div class="sk-name">Programming</div>
+      <div class="sk-pills"><span class="pill">Java</span><span class="pill">Python</span><span class="pill">C</span></div>
+    </div>
+    <div class="skill-card reveal">
+      <div class="sk-icon">🗄️</div>
+      <div class="sk-cat">Database</div>
+      <div class="sk-name">Data Management</div>
+      <div class="sk-pills"><span class="pill">MySQL</span><span class="pill">SQL</span></div>
+    </div>
+    <div class="skill-card reveal">
+      <div class="sk-icon">🔀</div>
+      <div class="sk-cat">Version Control</div>
+      <div class="sk-name">Git &amp; GitHub</div>
+      <div class="sk-pills"><span class="pill">Git</span><span class="pill">GitHub</span></div>
+    </div>
+    <div class="skill-card reveal">
+      <div class="sk-icon">🧠</div>
+      <div class="sk-cat">Core Competencies</div>
+      <div class="sk-name">Problem Solving</div>
+      <div class="sk-pills"><span class="pill">Logical Thinking</span><span class="pill">SW Fundamentals</span></div>
+    </div>
+    <div class="skill-card reveal">
+      <div class="sk-icon">🗣️</div>
+      <div class="sk-cat">Languages Known</div>
+      <div class="sk-name">Multilingual</div>
+      <div class="sk-pills"><span class="pill">English</span><span class="pill">Hindi</span><span class="pill">Malayalam</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="reveal"><div class="sec-label">What I've Built</div></div>
+  <div class="reveal"><h2 class="sec-title">Featured <span>Projects</span></h2></div>
+  <div class="projects-grid">
+    <a class="proj-card blue-card reveal" href="https://github.com/arjuntp/big-days" target="_blank" rel="noopener noreferrer" style="text-decoration:none;color:inherit;display:block;">
+      <div class="proj-num">01</div>
+      <div class="proj-tag">Event Management</div>
+      <div class="proj-name">Big Days</div>
+      <div class="proj-desc">A full-featured <strong>Holiday &amp; Event Management System</strong> built to simplify event planning from end to end. Supports event creation, guest registrations, schedule management, and automated reminders — all backed by a robust MySQL database. Designed for organisers who need a reliable, structured workflow to coordinate events of any scale.</div>
+      <div class="proj-stack">
+        <span class="stack-tag">Java</span>
+        <span class="stack-tag">MySQL</span>
+        <span class="stack-tag">JDBC</span>
+        <span class="stack-tag">Scheduling</span>
+        <span class="stack-tag">OOP</span>
+      </div>
+      <div class="proj-features">
+        <span class="feat-item">📅 Event Creation &amp; Scheduling</span>
+        <span class="feat-item">👥 Guest Registration</span>
+        <span class="feat-item">🔔 Reminders &amp; Notifications</span>
+        <span class="feat-item">📊 Dashboard Overview</span>
+      </div>
+      <div class="proj-arrow">↗</div>
+    </a>
+    <a class="proj-card purple-card reveal" href="https://github.com/arjuntp/code-nexus" target="_blank" rel="noopener noreferrer" style="text-decoration:none;color:inherit;display:block;">
+      <div class="proj-num">02</div>
+      <div class="proj-tag">Collaboration Platform</div>
+      <div class="proj-name">Code Nexus</div>
+      <div class="proj-desc">A developer-first <strong>Coding Collaboration Platform</strong> that brings teams together on shared projects. Features project workspaces, task assignment, real-time progress tracking, and a centralised code discussion board — enabling developers to coordinate seamlessly without leaving the platform.</div>
+      <div class="proj-stack">
+        <span class="stack-tag">Python</span>
+        <span class="stack-tag">MySQL</span>
+        <span class="stack-tag">Flask</span>
+        <span class="stack-tag">Project Mgmt</span>
+        <span class="stack-tag">REST API</span>
+      </div>
+      <div class="proj-features">
+        <span class="feat-item">🧑‍💻 Team Workspaces</span>
+        <span class="feat-item">✅ Task Assignment</span>
+        <span class="feat-item">📈 Progress Tracking</span>
+        <span class="feat-item">💬 Code Discussions</span>
+      </div>
+      <div class="proj-arrow">↗</div>
+    </a>
+  </div>
+</section>
+
+<!-- EDUCATION -->
+<section id="education">
+  <div class="reveal"><div class="sec-label">Where I Study</div></div>
+  <div class="reveal"><h2 class="sec-title">My <span>Education</span></h2></div>
+  <div class="edu-wrap reveal">
+    <div class="edu-timeline">
+      <div class="edu-item">
+        <div class="edu-dot"></div>
+        <div class="edu-card">
+          <div class="edu-year-badge">2025 — 2027</div>
+          <div class="edu-degree">Master of Computer Applications (MCA)</div>
+          <div class="edu-school">Saintgits College of Engineering · Kerala, India</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INTERNSHIPS -->
+<section id="internships">
+  <div class="reveal"><div class="sec-label">Where I've Worked</div></div>
+  <div class="reveal"><h2 class="sec-title">My <span>Internships</span></h2></div>
+  <div class="intern-grid">
+
+    <div class="intern-card reveal">
+      <div class="intern-role-badge"><span class="intern-dot"></span>ML / AI</div>
+      <div class="intern-company">Shristi Innovative</div>
+      <div class="intern-location">📍 Techno Park, Kerala</div>
+      <div class="intern-skills">
+        <span class="pill">Machine Learning</span>
+        <span class="pill">Artificial Intelligence</span>
+        <span class="pill">Python</span>
+      </div>
+    </div>
+
+    <div class="intern-card reveal">
+      <div class="intern-role-badge"><span class="intern-dot"></span>Python Development</div>
+      <div class="intern-company">Spectrum Software Solution</div>
+      <div class="intern-location">📍 Kakkanad, Kerala</div>
+      <div class="intern-skills">
+        <span class="pill">Python</span>
+        <span class="pill">Software Development</span>
+      </div>
+    </div>
+
+    <div class="intern-card reveal">
+      <div class="intern-role-badge"><span class="intern-dot"></span>ML / AI</div>
+      <div class="intern-company">Nextgen Pro</div>
+      <div class="intern-location">📍 Palarivattom, Kerala</div>
+      <div class="intern-skills">
+        <span class="pill">Machine Learning</span>
+        <span class="pill">Artificial Intelligence</span>
+        <span class="pill">Python</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="reveal"><div class="sec-label">Get In Touch</div></div>
+  <div class="contact-wrap">
+    <div class="contact-left reveal">
+      <div class="big-text">Let's create something <span>amazing</span> together.</div>
+      <p>I'm open to internships, collaborations, and exciting new projects. Don't hesitate to reach out — I'd love to connect!</p>
+    </div>
+    <div class="contact-links reveal">
+      <a href="mailto:arjunt397@gmail.com" class="c-link">
+        <div class="c-link-icon">✉️</div>
+        <div class="c-link-body"><div class="c-link-type">Email</div><div class="c-link-val">arjunt397@gmail.com</div></div>
+        <span class="c-link-arrow">↗</span>
+      </a>
+      <a href="tel:+919037548996" class="c-link">
+        <div class="c-link-icon">📱</div>
+        <div class="c-link-body"><div class="c-link-type">Phone</div><div class="c-link-val">+91 9037548996</div></div>
+        <span class="c-link-arrow">↗</span>
+      </a>
+      <a href="https://linkedin.com" target="_blank" class="c-link">
+        <div class="c-link-icon">💼</div>
+        <div class="c-link-body"><div class="c-link-type">LinkedIn</div><div class="c-link-val">Arjun T P</div></div>
+        <span class="c-link-arrow">↗</span>
+      </a>
+      <a href="https://github.com" target="_blank" class="c-link">
+        <div class="c-link-icon">🐙</div>
+        <div class="c-link-body"><div class="c-link-type">GitHub</div><div class="c-link-val">github.com/arjuntp</div></div>
+        <span class="c-link-arrow">↗</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span class="f-logo">ATP/</span>
+  <span>Designed with care · Kerala, India</span>
+  <span>© 2026 Arjun T P</span>
+</footer>
+
+<script>
+const cur=document.getElementById('cur'),ring=document.getElementById('curRing');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY});
+(function loop(){
+  cur.style.transform=`translate(${mx-5}px,${my-5}px)`;
+  rx+=(mx-rx)*0.1;ry+=(my-ry)*0.1;
+  ring.style.transform=`translate(${rx-16}px,${ry-16}px)`;
+  requestAnimationFrame(loop);
+})();
+document.querySelectorAll('a,button').forEach(el=>{
+  el.addEventListener('mouseenter',()=>{ring.style.width='52px';ring.style.height='52px';ring.style.borderColor='var(--pink)'});
+  el.addEventListener('mouseleave',()=>{ring.style.width='32px';ring.style.height='32px';ring.style.borderColor='var(--blue)'});
+});
+const obs=new IntersectionObserver(entries=>{
+  entries.forEach((e,i)=>{
+    if(e.isIntersecting){setTimeout(()=>e.target.classList.add('up'),i*100);obs.unobserve(e.target)}
+  });
+},{threshold:0.1});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+</script>
+</body>
+</html>
